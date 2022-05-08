@@ -1,0 +1,27 @@
+{
+  "name": "FundRiser",
+  "version": "1.0.0",
+  "description": "dfund smart-contract",
+  "main": "truffle-config.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/paschal533/FundRaiser-Dapp.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/paschal533/FundRaiser-Dapp/issues"
+  },
+  "homepage": "https://github.com/paschal533/FundRaiser-Dapp#readme",
+  "dependencies": {
+    "openzeppelin-solidity": "4.5.0",
+    "truffle-hdwallet-provider-privkey": "1.0.3"
+  }
+}
