@@ -5,7 +5,7 @@ const FundraiserFactory = require('../contracts/FundraiserFactory.json').abi
 const { Conflux } = require('js-conflux-sdk');
 
 const Home = () => {
-  const conflux = new Conflux({
+  /*const conflux = new Conflux({
     url: "https://test.confluxrpc.com",
     networkId: 1
   });
@@ -25,7 +25,7 @@ const Home = () => {
       }
   }
   init();
-  }, []);
+  }, []);*/
 
   return (
     <div className="">

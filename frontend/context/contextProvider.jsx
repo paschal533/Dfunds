@@ -1,28 +1,24 @@
 import React, { useEffect, useState } from "react";
-//import getWeb3 from "./getWeb3";
 import Link from "next/link";
-const FundraiserFactory = require('../contracts/FundraiserFactory.json')
+import FundraiserFactor from '../contracts/FundraiserFactory.json';
 import FundraiserContract from '../contracts/Fundraiser.json';
-import { useMoralis } from "react-moralis";
+import getWeb3 from "./getWeb3";
 import {
   ConnectButton,
   useNotification,
 } from "web3uikit";
-const { Conflux } = require('js-conflux-sdk');
-import Web3 from "web3";
-// In browser: const Conflux = window.TreeGraph.Conflux;
+const { Conflux, Drip } = require('js-conflux-sdk');
 
 const cc = require('cryptocompare');
 
 export const Context = React.createContext();
 
 export const ContextProvider = ({ children }) => {
-  const conflux = new Conflux({
+  const cfx = new Conflux({
     url: "https://test.confluxrpc.com",
     networkId: 1
   });
 
-  const { isAuthenticated, account } = useMoralis();
   const [currentAccount, setCurrentAccount] = useState("");
   const [factoryContract, setFactoryContract] = useState(null);
   const [ funds, setFunds ] = useState([]);
@@ -50,22 +46,24 @@ export const ContextProvider = ({ children }) => {
     setImage(img);
   };
 
-  // get factorycontract instance
   useEffect(() => {
-    const init = async() => { 
-      try {
-        const contract = conflux.Contract({
-          abi: FundraiserFactory.abi,
-          address: FundraiserFactory.networks[1].address
-        });
-        setContract(contract);
-      } catch(error) {
-        alert(error)
-        console.error(error);
+    const getadd = async () => {
+      try{
+        const acct = cfx.wallet.addPrivateKey('0xf507bf529f870fff107fee93220a7f0516d90914c3510d53ac08e8b723c64f0a')
+        //const contract = cfx.Contract({ abi: FundraiserFactor.abi, bytecode: FundraiserFactor.bytecode })
+        //const txReceipt = await contract.constructor().sendTransaction({ from: acct }).executed()
+        //console.log(txReceipt);
+        const contrac = await cfx.Contract({ abi: FundraiserFactor.abi, address: "cfxtest:aca855fctap4ptfyn0aak58a9t9279pjfeb0ymf6vk" })
+        setContract(contrac);
+        const res = await contrac.fundraisers(10, 0).call({ from: acct });
+        setFunds(res)
+        setLoading(false)
+      }catch(error){
+        console.log(error)
       }
     }
-  init();
-  }, [currentAccount]);
+    getadd();
+  }, [])
   
 
   const dispatch = useNotification();
@@ -124,67 +122,42 @@ export const ContextProvider = ({ children }) => {
     });
   };
 
-  //get 20 Fundraisers
-  useEffect(() => {
-    getFundraisers()
-  }, [factoryContract]);
-
-  const getFundraisers = async () => {
-    try {
-      const contract = conflux.Contract({
-        abi: FundraiserFactory.abi,
-        address: FundraiserFactory.networks[1].address
-      });
-      const funds = await contract?.fundraisers(10, 0).call()
-      console.log(funds)
-      setFunds(funds)
-      setLoading(false);
-    }
-    catch(error) {
-      console.error(error);
-    }
-  }
-
   // get a fundraiser details
-  /*const getAfundraiser = async (fund) => {
+  const getAfundraiser = async (fund) => {
     try {
-      const instance = new web3.eth.Contract(
-        FundraiserContract.abi,
-        fund
-      );
-      setContract(instance);
+      const acct = cfx.wallet.addPrivateKey('0xf507bf529f870fff107fee93220a7f0516d90914c3510d53ac08e8b723c64f0a')
+      const instance = await cfx.Contract({ abi: FundraiserContract.abi, address: fund })
 
-      const name = await instance.methods.name().call()
-      const description = await instance.methods.description().call()
-      const totalDonations = await instance.methods.totalDonations().call()
-      const imageURL = await instance.methods.imageURL().call()
-      const url = await instance.methods.url().call()
-      
-      const exchangeRate = await cc.price('ETH', ['USD'])
-      setExchangeRate(exchangeRate.USD)
-      const eth = web3.utils.fromWei(totalDonations, 'ether')
-      const dollarDonationAmount = exchangeRate.USD * eth
+      const name = await instance.name().call({ from: acct })
+      const description = await instance.description().call({ from: acct })
+      const totalDonations = await instance.totalDonations().call({ from: acct })
+      const imageURL = await instance.imageURL().call({ from: acct })
+      const url = await instance.url().call({ from: acct })
 
-      setTotalDonations(dollarDonationAmount.toFixed(2))
       setFundname(name)
       setDescription(description)
       setImageURL(imageURL)
       setURL(url)
 
-      const userDonations = await instance.methods.myDonations().call({ from: currentAccount })
-      console.log(userDonations)
+      const userDonations = await instance.myDonations().call({ from: acct })
+      const exchangeRate = await cc.price('CFX', ['USD'])
+      setExchangeRate(exchangeRate.USD)
+      const CFXToken = Drip.fromGDrip(totalDonations).toString();
+      const dollarDonationAmount = exchangeRate.USD * CFXToken
+      setTotalDonations(dollarDonationAmount.toFixed(2))
+
       setUserDonations(userDonations)
 
-     // const isUser = currentAccount
-      const isOwner = await instance.methods.owner().call()
-      setModalLoading(false);
+      const isOwner = await instance.owner().call({ from: acct })
+      console.log(isOwner)
 
-      if (isOwner.toLowerCase() === currentAccount) {
+      if (isOwner === currentAccount) {
         setIsOwner(true)
       }
+      setModalLoading(false)
     }
     catch(error) {
-      console.log(error);
+      console.error(error);
     }
   }
 
@@ -196,13 +169,13 @@ export const ContextProvider = ({ children }) => {
 
 // submit donation
   const submitFunds = async () => {
-    const ethRate = exchangeRate
-    const ethTotal = donationAmount / ethRate
+    const cfxRate = exchangeRate
+    const cfxTotal = donationAmount / cfxRate
 
-    try { 
-      const donation = web3.utils.toWei(ethTotal.toString(), 'ether')
+    try {
+      const donation = Drip.fromGDrip(cfxTotal).toString();
 
-      const tx = await Contract.methods.donate().send({
+      const tx = await Contract.donate().send({
         from: currentAccount,
         value: donation,
         gas: 650000
@@ -252,7 +225,7 @@ export const ContextProvider = ({ children }) => {
   //withdraw funds
   const withdrawalFunds = async () => {
     try { 
-      await Contract.methods.withdraw().send({
+      await Contract.withdraw().send({
         from: currentAccount,
       })
 
@@ -264,12 +237,12 @@ export const ContextProvider = ({ children }) => {
 
   // set beneficiary
   const setBeneficiary = async () => {
-    await Contract.methods.setBeneficiary(beneficiary).send({
+    await Contract.setBeneficiary(beneficiary).send({
       from: currentAccount,
     })
 
      handleNewBeneficiary()
-  }*/
+  }
 
   return (
     <Context.Provider
@@ -278,29 +251,28 @@ export const ContextProvider = ({ children }) => {
         handleNewNotification,
         handleNewFundraiser,
         ConnectButton,
-        isAuthenticated,
         factoryContract,
         funds,
         loading,
-        //getAfundraiser,
-        //imageURL,
-        //fundName,
-        //description,
-        //getFundraiserDetails,
+        getAfundraiser,
+        imageURL,
+        fundName,
+        description,
+        getFundraiserDetails,
         modalLoading,
-        //ethAmount,
-        //submitFunds,
+        ethAmount,
+        submitFunds,
         setDonationAmount,
-        //totalDonations,
+        totalDonations,
         Contract,
-        //donationAmount,
-        //renderDonationsList,
-        //url,
-        //Owner,
-        //withdrawalFunds,
-        //setBeneficiary,
-        //setNewBeneficiary,
-        //beneficiary,
+        donationAmount,
+        renderDonationsList,
+        url,
+        Owner,
+        withdrawalFunds,
+        setBeneficiary,
+        setNewBeneficiary,
+        beneficiary,
         nftimage,
         handleImage,
         game,

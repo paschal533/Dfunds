@@ -1,4 +1,4 @@
-import { MoralisProvider } from 'react-moralis';
+import React from 'react';
 import { NotificationProvider } from 'web3uikit';
 import { ContextProvider } from '../context/contextProvider';
 import { NextSeo } from "next-seo";
@@ -21,7 +21,7 @@ function MyApp({ Component, pageProps }) {
   });
 
   return (
-    <>
+    <div>
     <NextSeo
       title="DFunds | A Decenterized fund raiser app"
       description="Raiser funds, create and mint nfts, and also play a game to win an nfts with Dfunds"
@@ -53,23 +53,18 @@ function MyApp({ Component, pageProps }) {
         ]}
     />
     <ChakraProvider theme={theme}>
-      <MoralisProvider
-        appId="5lP5MT7DSxe6Zvy6iIZ0zAintIg8nhEnhQNNQLBZ"
-        serverUrl="https://ld8khqzzr6yl.usemoralis.com:2053/server"
-      >
-          <NotificationProvider>
-            <ContextProvider>
-              <Navbar />
-              <br />
-              <br />
-              <br />
-              <Component {...pageProps} />
-              <Footer />
-            </ContextProvider>
-          </NotificationProvider>
-        </MoralisProvider>
+      <NotificationProvider>
+        <ContextProvider>
+          <Navbar />
+          <br />
+          <br />
+          <br />
+          <Component {...pageProps} />
+          <Footer />
+        </ContextProvider>
+      </NotificationProvider>
     </ChakraProvider>
-    </>)
+    </div>)
 }
 
 export default MyApp

@@ -40,15 +40,25 @@ const NewFundraiser = () => {
       const beneficiary = address
       const cfx = await Conflux.create({ url: "https://test.confluxrpc.com", networkId: 1, logger: console })
       const me = cfx.wallet.addPrivateKey("0xf507bf529f870fff107fee93220a7f0516d90914c3510d53ac08e8b723c64f0a");
-
+      console.log('starting')
       const transaction = await Contract.createFundraiser(
         name,
         url,
         imageURL,
         description,
         beneficiary
-      ).sendTransaction({from: me.address }).executed();
+      ).sendTransaction({from: me.toString() }).executed();
       console.log(transaction)
+      const res = await Contract.fundraisers(10, 0).call();
+      console.log(res)
+      /*const transaction = await Contract.methods.createFundraiser(
+        name,
+        url,
+        imageURL,
+        description,
+        beneficiary
+      ).send({ from: currentAccount })
+      console.log(t run ransaction)*/
       handleNewFundraiser();
       setAddress('');
       setFundraiserDescription('');
@@ -57,13 +67,15 @@ const NewFundraiser = () => {
       setImage('');
     } catch (error) {
       console.log(error)
+      alert(error)
       /*handleNewFundraiser('');
       setAddress('');
       setFundraiserDescription('');
       setFundraiserWebsite('');
       setFundraiserName('');
-      setImage('');*/
-    }
+      setImage('');
+    }*/
+   }
   }
 
   return (
@@ -127,7 +139,7 @@ const NewFundraiser = () => {
           }}
         />
       <br />
-        {currentAccount.length > 0 ? <Button
+        {!currentAccount.length > 0 ? <Button
           disabled={Validate()}
           id="test-button-primary"
           onClick={handleSubmit}

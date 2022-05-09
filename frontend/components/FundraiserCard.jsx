@@ -3,12 +3,16 @@ import Link from 'next/link';
 import { Context } from '../context/contextProvider';
 import FundraiserContract from '../contracts/Fundraiser.json';
 import { Card, Button } from 'web3uikit';
-import Web3 from 'web3'
+import { Conflux, Drip } from 'js-conflux-sdk';
 
 const cc = require('cryptocompare');
 
 const FundraiserCard = ({ fundraiser }) => {
-  const web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:8545'))
+  const cfx = new Conflux({
+      url: "https://test.confluxrpc.com",
+      networkId: 1
+  });
+
   const ethAmount = (donationAmount / exchangeRate || 0).toFixed(4)
 
   const { modalOpen } = useContext(Context);
@@ -36,36 +40,31 @@ const FundraiserCard = ({ fundraiser }) => {
    // get a fundraiser details
    const getAfund = async (fund) => {
     try {
-      const instance = new web3.eth.Contract(
-        FundraiserContract.abi,
-        fund
-      );
+      const acct = cfx.wallet.addPrivateKey('0xf507bf529f870fff107fee93220a7f0516d90914c3510d53ac08e8b723c64f0a')
+      const instance = await cfx.Contract({ abi: FundraiserContract.abi, address: fund })
 
-      const name = await instance.methods.name().call()
-      const description = await instance.methods.description().call()
-      const totalDonations = await instance.methods.totalDonations().call()
-      const imageURL = await instance.methods.imageURL().call()
-      const url = await instance.methods.url().call()
-      //setTotalDonations(web3.utils.fromWei(totalDonations, 'ether'))
+      const name = await instance.name().call({ from: acct })
+      const description = await instance.description().call({ from: acct })
+      const totalDonations = await instance.totalDonations().call({ from: acct })
+      const imageURL = await instance.imageURL().call({ from: acct })
+      const url = await instance.url().call({ from: acct })
 
-      //const exchangeRate =  10
-      const exchangeRate = await cc.price('ETH', ['USD'])
-      setExchangeRate(exchangeRate.USD)
-      const eth = web3.utils.fromWei(totalDonations, 'ether')
-      const dollarDonationAmount = exchangeRate.USD * eth
-
-      setTotalDonations(dollarDonationAmount.toFixed(2))
       setFundname(name)
       setDescription(description)
       setImageURL(imageURL)
       setURL(url)
 
-      const userDonations = await instance.methods.myDonations().call({ from: currentAccount })
-      console.log(userDonations)
+      const userDonations = await instance.myDonations().call({ from: acct })
+      const exchangeRate = await cc.price('CFX', ['USD'])
+      setExchangeRate(exchangeRate.USD)
+      const CFXToken = Drip.fromGDrip(totalDonations).toString();
+      const dollarDonationAmount = exchangeRate.USD * CFXToken
+      setTotalDonations(dollarDonationAmount.toFixed(2))
+
       setUserDonations(userDonations)
 
-      const isUser = currentAccount
-      const isOwner = await instance.methods.owner().call()
+      const isOwner = await instance.owner().call({ from: acct })
+      console.log(isOwner)
 
       if (isOwner === currentAccount) {
         setIsOwner(true)
@@ -80,13 +79,14 @@ const FundraiserCard = ({ fundraiser }) => {
     return (
       <div>
         <div className="text-[#030A1C] text-sm">{`${description?.slice(0, 150)}...`}</div>
-        <div className="font-bold">Total Donations: ${totalDonations}</div>
+        <div className="font-bold mb-2">Total Donations: ${totalDonations}</div>
         <Link className="donation-receipt-link" href={`/fundraiser/${fundraiser}`}>
           <Button
             id="test-button-primary"
             text="View more"
             theme="primary"
             type="button"
+            className="p-4"
           />
         </Link>
       </div>

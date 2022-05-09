@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-import "openzeppelin-solidity/contracts/access/Ownable.sol";
-import "openzeppelin-solidity/contracts/utils/math/SafeMath.sol";
+import "./Ownable.sol";
+import "./SafeMath.sol";
 
 contract Fundraiser is Ownable {
   using SafeMath for uint256;

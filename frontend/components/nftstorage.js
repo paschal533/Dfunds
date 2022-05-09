@@ -1,6 +1,6 @@
 //require('dotenv').config();
 const key = process.env.REACT_APP_NFTSTORAGE_KEY;
-const abi = require('../contracts/contract-abi.json');
+const abi = require('../context/contract-abi.json');
 const { Conflux } = require("js-conflux-sdk");
 
 export const mintNFT = async (url) => {

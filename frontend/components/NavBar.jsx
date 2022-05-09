@@ -166,25 +166,7 @@ export default function Navigation({ color = "white" }) {
               (item, index) => <NavBarItem key={item + index} title={item} classprops="my-2 text-lg" />,
               )}
               <li>
-                <Button
-                  onClick={connectWalletPressed}
-                  bg="#3198FE"
-                  color="white"
-                  fontWeight="semibold"
-                  rounded="lg"
-                  leftIcon={<FaWallet />}
-                  _hover={{}}
-                  _focus={{}}
-                  _active={{}}
-                >
-                  {currentAccount.length > 0 ? (
-                    String(currentAccount).substring(0, 6) +
-                    "..." +
-                    String(currentAccount).substring(38)
-                  ) : (
-                    <span>Connect Wallet</span>
-                  )}
-                </Button>
+                <ConnectWallet />
               </li>
           </ul>
           )}

@@ -27,10 +27,18 @@ const Fundraiser = () => {
    const { address } = router.query;
 
   useEffect(() => {
-    getFundraiserDetails(address)
+    const init = () => {
+      try {
+        getFundraiserDetails(address)
+      } catch (error){
+        alert(error)
+      }
+    }
+    init()
   }, [address])
   
-  console.log(address);
+  //console.log(address);
+  console.log(fundName)
    
   return (
     <div className="text-white">
@@ -109,7 +117,7 @@ const Fundraiser = () => {
               </div>
             </>}
           </div>
-           : <Loader />}
+           :<div className="h-[70vh]"> <Loader /></div>}
       </div>
     </div>
   )
