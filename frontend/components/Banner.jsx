@@ -2,7 +2,7 @@ import React from 'react';
 import { IoMdCreate } from "react-icons/io";
 import { Button } from 'web3uikit';
 import Image from "next/image";
-//import Bg from '../assets/bg.png';
+import Bg from '../assets/bg.png';
 import Link from 'next/link';
 
 const Banner = () => {
