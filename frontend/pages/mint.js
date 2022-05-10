@@ -17,15 +17,11 @@ import { storeNFT } from "../components/Upload.mjs";
 import Link from 'next/link';
 import Confetti from 'react-confetti';
 import Head from 'next/head';
-import { useMoralis } from "react-moralis";
-import {
-  ConnectButton
-} from "web3uikit";
+import { ConnectWallet } from '../components';
 
 const MINT_STAGES = ['Adding the NFT to the blockchain', 'Putting the token on the marketplace'];
 
 export default function MintPage() {
-  const { isAuthenticated } = useMoralis();
   const { nftimage, currentAccount } = useContext(Context);
   const [mintStage, setMintStage] = useState(-1);
   const [errorStage, setErrorStage] = useState(-1);
@@ -71,8 +67,10 @@ export default function MintPage() {
     }
 
     const { ipnft } = nftStorageResponse;
+
+    console.log(ipnft)
     
-    const { status } = await mintNFT("https://api.nft.storage/" + ipnft);
+    const { status } = await mintNFT("https://api.nft.storage/"+ipnft);
     console.log(status);
     toast({
       title: 'NFT minted',
@@ -89,7 +87,7 @@ export default function MintPage() {
   const Minting = () => (
     <>
       <div className="flex min-h-screen w-full text-white p-5 justify-center items-center">
-        <div className="p-10 bg-gray rounded-lg ">
+        <div className="pl-10 pr-10 pb-10 pt-0 bg-gray rounded-lg ">
           <div className="flex flex-col min-h-screen w-full text-white p-5 justify-center items-center">
             <Spinner
               thickness="4px"
@@ -204,12 +202,12 @@ export default function MintPage() {
                 <Input type="text" value={description} onChange={handleDescChange} />
               </FormControl>
               <Stack spacing={20}>
-                {!isAuthenticated ?<button
+                {!currentAccount ?<button
                   className="border-2 border-solid border-purple px-2 py-1 rounded-md font-bold bg-purple hover:bg-black hover:text-white"
                   onClick={onMintPressed}
                 >
                   Mint NFT
-                </button> : <ConnectButton /> }
+                </button> : <ConnectWallet /> }
               </Stack>
             </Stack>
           </Flex>

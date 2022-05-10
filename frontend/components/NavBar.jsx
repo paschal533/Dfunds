@@ -1,33 +1,32 @@
 import {
   Flex,
-  Button,
   Text,
   Box,
 } from "@chakra-ui/react";
 import Image from "next/image";
 import { useState, useEffect, useContext } from "react";
+import { Context } from '../context/contextProvider';
 import Logo from '../assets/vault3_logo.svg';
 import { FiMenu } from "react-icons/fi";
 import { AiOutlineClose } from "react-icons/ai";
-import { Context } from '../context/contextProvider';
+import { getCurrentWalletConnected } from "./interact";
 import Link from "next/link";
-import {  FaWallet } from "react-icons/fa";
 import ConnectWallet from "./ConnectWallet";
 
 export default function Navigation({ color = "white" }) {
-  const { setCurrentAccount, currentAccount } = useContext(Context);
   const [topOfPage, setTopOfPage] = useState(true);
   const [toggleMenu, setToggleMenu] = useState(false);
   const [status, setStatus] = useState("");
+  const { setCurrentAccount } = useContext(Context);
 
 
-  /*useEffect(async () => {
+  useEffect(async () => {
     const { address, status } = await getCurrentWalletConnected();
     setCurrentAccount(address)
     setStatus(status);
 
     addWalletListener();
-  }, []);*/
+  }, []);
 
   function addWalletListener() {
     if (window.conflux) {
@@ -126,26 +125,6 @@ export default function Navigation({ color = "white" }) {
               <NavBarItem key={item + index} title={item} />
           ))}
           <li>
-            {/*<Button
-              onClick={connectWalletPressed}
-              bg="#3198FE"
-              color="white"
-              fontWeight="semibold"
-              rounded="lg"
-              leftIcon={<FaWallet />}
-              _hover={{}}
-              _focus={{}}
-              _active={{}}
-            >
-              {currentAccount.length > 0 ? (
-                "Connected: " +
-                  String(currentAccount).substring(0, 6) +
-                  "..." +
-                  String(currentAccount).substring(38)
-                ) : (
-                  <span>Connect Wallet</span>
-              )}
-            </Button>*/}
             <ConnectWallet />
           </li>
           </ul>

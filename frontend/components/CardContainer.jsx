@@ -8,8 +8,8 @@ const CardContainer = () => {
   const { funds, loading } = useContext(Context);
 
   return (
-    <div className="flex min-h-[30vh] flex-col items-center lg:mt-[-100px] justify-center md:mt-[-60px] py-2">
-      <div className="drop-shadow-lg h-[100%] w-[90%] md:p-4 p-2 rounded-lg bg-slate-300">
+    <div className="flex md:px-10 px-0 min-h-[30vh] flex-col items-center lg:mt-[-100px] justify-center md:mt-[-60px] py-2">
+      <div className="drop-shadow-lg h-[100%] md:w-[100%] w-[90%] md:p-4 p-2 rounded-lg bg-slate-300">
         <div className="flex justify-between w-full">
           <h1 className="mb-2 text-2xl">Top Fundraisers</h1>
           <Icon

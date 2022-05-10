@@ -11,7 +11,7 @@ export function storeNFT(imagePath, name, description) {
     try {
     // load the file from disk
     const image = makeblob(imagePath)
-    console.log(image);
+    //console.log(image);
 
     // create a new NFTStorage client using our API key
     const nftstorage = new NFTStorage({ token: NFT_STORAGE_KEY })

@@ -21,7 +21,8 @@ const Fundraiser = () => {
     withdrawalFunds,
     setNewBeneficiary,
     setBeneficiary,
-    beneficiary
+    beneficiary,
+    currentAccount
    } = useContext(Context);
    const router = useRouter();
    const { address } = router.query;
@@ -71,7 +72,7 @@ const Fundraiser = () => {
                 <Button
                   id="test-button-primary"
                   onClick={() => submitFunds()}
-                  disabled={!donationAmount ? true : false}
+                  disabled={!donationAmount && currentAccount ? true : false}
                   text="Donate"
                   theme="primary"
                   type="button"

@@ -7,7 +7,7 @@ import Link from 'next/link';
 
 const Banner = () => {
   return (
-    <div className="flex w-full justify-center items-center">
+    <div className="flex w-full justify-center px-4 items-center">
       <div className="flex md:flex-row flex-col justify-between md:p-20 py-12 md:px-0 px-4">
         <div className="flex flex-1 justify-start items-start flex-col">
           <h1 className="text-3xl sm:text-5xl text-white text-gradient py-1">

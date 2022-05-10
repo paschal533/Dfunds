@@ -2,11 +2,7 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import FundraiserFactor from '../contracts/FundraiserFactory.json';
 import FundraiserContract from '../contracts/Fundraiser.json';
-import getWeb3 from "./getWeb3";
-import {
-  ConnectButton,
-  useNotification,
-} from "web3uikit";
+import { useToast } from '@chakra-ui/react';
 const { Conflux, Drip } = require('js-conflux-sdk');
 
 const cc = require('cryptocompare');
@@ -19,6 +15,8 @@ export const ContextProvider = ({ children }) => {
     networkId: 1
   });
 
+  const toast = useToast()
+
   const [currentAccount, setCurrentAccount] = useState("");
   const [factoryContract, setFactoryContract] = useState(null);
   const [ funds, setFunds ] = useState([]);
@@ -29,7 +27,6 @@ export const ContextProvider = ({ children }) => {
   const [ totalDonations, setTotalDonations ] = useState(null)
   const [ imageURL, setImageURL ] = useState(null)
   const [ url, setURL ] = useState(null)
-  const [ open, setOpen] = React.useState(false);
   const [ donationAmount, setDonationAmount] = useState(null)
   const [ exchangeRate, setExchangeRate ] = useState(null)
   const [ userDonations, setUserDonations ] = useState(null)
@@ -47,7 +44,7 @@ export const ContextProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    const getadd = async () => {
+    const init = async () => {
       try{
         const acct = cfx.wallet.addPrivateKey('0xf507bf529f870fff107fee93220a7f0516d90914c3510d53ac08e8b723c64f0a')
         //const contract = cfx.Contract({ abi: FundraiserFactor.abi, bytecode: FundraiserFactor.bytecode })
@@ -62,64 +59,73 @@ export const ContextProvider = ({ children }) => {
         console.log(error)
       }
     }
-    getadd();
+    init();
   }, [])
-  
-
-  const dispatch = useNotification();
 
   const handleNewNotification = () => {
-    dispatch({
-      type: "error",
-      message: "Pleaser Connect Your Crypto Wallet",
-      title: "Not Authenticated",
-      position: "topL",
-    });
+    toast({
+      position: "top-left",
+      title: 'Not Authenticated',
+      description: 'Please Connect Your Crypto Wallet',
+      status: 'error',
+      duration: 9000,
+      isClosable: true
+    })
   };
 
   const handleNewFundraiser = () => {
-    dispatch({
-      type: "success",
-      message: "Fundraiser Created",
-      title: "New Fundraiser",
-      position: "topR",
-    });
+    toast({
+      position: "top-left",
+      title: 'New Fundraiser',
+      description: 'Fundraiser Created',
+      status: 'success',
+      duration: 9000,
+      isClosable: true
+    }) 
   };
 
   const handleDonation = () => {
-    dispatch({
-      type: "success",
-      message: `You have successfully donated $ ${donationAmount} USD to the fundraiser`,
-      title: "Donated",
-      position: "topL",
-    });
+    toast({
+      position: "top-left",
+      title: 'Donation',
+      description: `You have successfully donated $ ${donationAmount} USD to the fundraiser`,
+      status: 'success',
+      duration: 9000,
+      isClosable: true
+    })
   };
 
   const handleNewBeneficiary = () => {
-    dispatch({
-      type: "success",
-      message: `You have successfully changed the beneficary`,
-      title: "New Beneficiary",
-      position: "topL",
-    });
+    toast({
+      position: "top-left",
+      title: 'New Beneficiary',
+      description: 'You have successfully changed the beneficary',
+      status: 'success',
+      duration: 9000,
+      isClosable: true
+    })
   };
 
   const handleWithdraw = () => {
-    dispatch({
-      type: "success",
-      message: `You have successfully withdrawn your funds`,
-      title: "Withdraw",
-      position: "topL",
-    });
+    toast({
+      position: "top-left",
+      title: 'Withdraw',
+      description: 'You have successfully withdrawn your funds',
+      status: 'success',
+      duration: 9000,
+      isClosable: true
+    })
   };
 
   const handleNotEnuogh = () => {
-    dispatch({
-      type: "error",
-      message: `Sorry you do not have enuogh fund to make this transaction`,
-      title: "Not enuogh fund",
-      position: "topL",
-    });
+    toast({
+      position: "top-left",
+      title: 'Not enuogh fund',
+      description: 'Sorry you do not have enuogh fund to make this transaction',
+      status: 'error',
+      duration: 9000,
+      isClosable: true
+    })
   };
 
   // get a fundraiser details
@@ -139,7 +145,7 @@ export const ContextProvider = ({ children }) => {
       setImageURL(imageURL)
       setURL(url)
 
-      const userDonations = await instance.myDonations().call({ from: acct })
+      const userDonations = await instance.myDonations().call({ from: currentAccount })
       const exchangeRate = await cc.price('CFX', ['USD'])
       setExchangeRate(exchangeRate.USD)
       const CFXToken = Drip.fromGDrip(totalDonations).toString();
@@ -157,7 +163,7 @@ export const ContextProvider = ({ children }) => {
       setModalLoading(false)
     }
     catch(error) {
-      console.error(error);
+      console.log(error);
     }
   }
 
@@ -197,8 +203,8 @@ export const ContextProvider = ({ children }) => {
     let donationList = []
     var i
     for (i = 0; i < totalDonations; i++) {
-      const ethAmount = web3.utils.fromWei(donations.values[i])
-      const userDonation = exchangeRate * ethAmount
+      const cfxAmount = Drip.fromGDrip(donations.values[i])
+      const userDonation = exchangeRate * cfxAmount
       const donationDate = donations.dates[i]
       donationList.push({ donationAmount: userDonation.toFixed(2), date: donationDate})
     }
@@ -250,7 +256,6 @@ export const ContextProvider = ({ children }) => {
         currentAccount,
         handleNewNotification,
         handleNewFundraiser,
-        ConnectButton,
         factoryContract,
         funds,
         loading,
