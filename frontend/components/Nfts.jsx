@@ -1,4 +1,4 @@
-import { Box, Image, Text } from "@chakra-ui/react";
+import { Text } from "@chakra-ui/react";
 import CustomContainer from "./CustomContainer";
 
 export default function NFTs({ user }) {
