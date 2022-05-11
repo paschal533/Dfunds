@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from "react";
+import { 
+  BiReceipt
+ } from "react-icons/bi";
 import Link from "next/link";
 import FundraiserFactor from '../contracts/FundraiserFactory.json';
 import FundraiserContract from '../contracts/Fundraiser.json';
-import { useToast } from '@chakra-ui/react';
+import { useToast, Button } from '@chakra-ui/react';
 const { Conflux, Drip } = require('js-conflux-sdk');
 
 const cc = require('cryptocompare');
@@ -46,13 +49,13 @@ export const ContextProvider = ({ children }) => {
   useEffect(() => {
     const init = async () => {
       try{
-        const acct = cfx.wallet.addPrivateKey('0xf507bf529f870fff107fee93220a7f0516d90914c3510d53ac08e8b723c64f0a')
+        const acct = cfx.wallet.addPrivateKey('0x9d2c1dc41f209792f8af782f1afcaa2bfc54dd2d67a40722143cd5b36224ffab')
         //const contract = cfx.Contract({ abi: FundraiserFactor.abi, bytecode: FundraiserFactor.bytecode })
         //const txReceipt = await contract.constructor().sendTransaction({ from: acct }).executed()
         //console.log(txReceipt);
         const contrac = await cfx.Contract({ abi: FundraiserFactor.abi, address: "cfxtest:aca855fctap4ptfyn0aak58a9t9279pjfeb0ymf6vk" })
         setContract(contrac);
-        const res = await contrac.fundraisers(10, 0).call({ from: acct });
+        const res = await contrac.fundraisers(4, 0).call({ from: acct });
         setFunds(res)
         setLoading(false)
       }catch(error){
@@ -133,6 +136,7 @@ export const ContextProvider = ({ children }) => {
     try {
       const acct = cfx.wallet.addPrivateKey('0xf507bf529f870fff107fee93220a7f0516d90914c3510d53ac08e8b723c64f0a')
       const instance = await cfx.Contract({ abi: FundraiserContract.abi, address: fund })
+      setFactoryContract(instance)
 
       const name = await instance.name().call({ from: acct })
       const description = await instance.description().call({ from: acct })
@@ -177,15 +181,17 @@ export const ContextProvider = ({ children }) => {
   const submitFunds = async () => {
     const cfxRate = exchangeRate
     const cfxTotal = donationAmount / cfxRate
+    console.log(factoryContract)
 
     try {
-      const donation = Drip.fromGDrip(cfxTotal).toString();
+      const donation =  Drip.fromCFX(cfxTotal).toString()
 
-      const tx = await Contract.donate().send({
+      const tx = await factoryContract.donate().sendTransaction({
         from: currentAccount,
         value: donation,
         gas: 650000
-      })
+      }).executed()
+      setDonationAmount('')
       handleDonation();
     } catch(error) {
       handleNotEnuogh();
@@ -212,16 +218,22 @@ export const ContextProvider = ({ children }) => {
     return donationList.map((donation) => {
       return (
         <div className="mt-3 flex justify-between">
-          <p className="mr-4 mt-4 donationAmount">${donation.donationAmount}</p>
+          <p className="mr-4 mt-4 donationAmount">${donation.donationAmount.slice(0, 4)}</p>
           <Link className="donation-receipt-link" href={{ pathname: '/receipts', query: { fund: fundName, donation: donation.donationAmount, date: donation.date} }}>
-            <button
-              type="button"
-              className="flex flex-row justify-center items-center mr-2 bg-[#2952e3] p-3 rounded-lg cursor-pointer hover:bg-[#2546bd]"
+            <Button
+              bg="#3198FE"
+              color="white"
+              fontWeight="semibold"
+              rounded="lg"
+              leftIcon={<BiReceipt />}
+              _hover={{}}
+              _focus={{}}
+              _active={{}}
               >
                 <p className="text-white text-base font-semibold">
                   Request Receipt
                 </p>
-              </button>
+              </Button>
           </Link>
         </div>
       )
@@ -231,9 +243,9 @@ export const ContextProvider = ({ children }) => {
   //withdraw funds
   const withdrawalFunds = async () => {
     try { 
-      await Contract.withdraw().send({
+      await factoryContract.withdraw().sendTransaction({
         from: currentAccount,
-      })
+      }).executed()
 
       handleWithdraw();
     } catch(error) {
@@ -243,9 +255,9 @@ export const ContextProvider = ({ children }) => {
 
   // set beneficiary
   const setBeneficiary = async () => {
-    await Contract.setBeneficiary(beneficiary).send({
+    await factoryContract.setBeneficiary(beneficiary).sendTransaction({
       from: currentAccount,
-    })
+    }).executed()
 
      handleNewBeneficiary()
   }
@@ -255,6 +267,7 @@ export const ContextProvider = ({ children }) => {
       value={{
         currentAccount,
         handleNewNotification,
+        setLoading,
         handleNewFundraiser,
         factoryContract,
         funds,

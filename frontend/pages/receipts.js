@@ -17,12 +17,12 @@ const Receipts = (props) => {
   }, []);
 
   return (
-    <div className="text-white md:ml-0 ml-3 flex mt-6 flex-col items-center justify-center py-2">
+    <div className="text-white h-[80vh] md:ml-0 ml-3 flex mt-6 md:mt-[-100px] flex-col items-center justify-center py-2">
       <h3 className="text-2xl font-bold mb-8">Thank you for your donation to {fundName}</h3>
 
       <div>
         <div className="mb-3">Date of Donation: {date}</div>
-        <div>Donation Value: ${donation}</div>
+        <div>Donation Value: ${donation?.slice(0, 4)}</div>
       </div>
     </div>
   )

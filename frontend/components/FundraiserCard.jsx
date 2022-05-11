@@ -15,7 +15,7 @@ const FundraiserCard = ({ fundraiser }) => {
 
   const ethAmount = (donationAmount / exchangeRate || 0).toFixed(4)
 
-  const { modalOpen } = useContext(Context);
+  const { modalOpen, setLoading } = useContext(Context);
   const [ contract, setContract] = useState(null)
   const [ accounts, setAccounts ] = useState(null)
   const [ fund, setFundraiser ] = useState(null)
@@ -57,11 +57,12 @@ const FundraiserCard = ({ fundraiser }) => {
       const userDonations = await instance.myDonations().call({ from: acct })
       const exchangeRate = await cc.price('CFX', ['USD'])
       setExchangeRate(exchangeRate.USD)
-      const CFXToken = Drip.fromGDrip(totalDonations).toString();
+      const CFXToken = Drip.fromCFX(totalDonations).toString()
       const dollarDonationAmount = exchangeRate.USD * CFXToken
-      setTotalDonations(dollarDonationAmount.toFixed(2))
+      setTotalDonations(dollarDonationAmount.toFixed(2).slice(0, 4))
 
       setUserDonations(userDonations)
+
 
       const isOwner = await instance.owner().call({ from: acct })
       console.log(isOwner)

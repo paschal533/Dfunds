@@ -23,7 +23,7 @@ export default function Send({ user }) {
     try { 
       const account = conflux.wallet.addPrivateKey("0xf507bf529f870fff107fee93220a7f0516d90914c3510d53ac08e8b723c64f0a");
       const hash = await conflux.cfx.sendTransaction({
-        from: account.address,
+        from: account,
         to: receiver,
         value: Drip.fromCFX(amount),
         gas: 2000000

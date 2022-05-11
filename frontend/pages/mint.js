@@ -12,6 +12,7 @@ import {
   Spinner,
 } from '@chakra-ui/react';
 import { Context } from '../context/contextProvider';
+import { useRouter } from 'next/router'
 import { mintNFT } from "../components/nftstorage";
 import { storeNFT } from "../components/Upload.mjs";
 import Link from 'next/link';
@@ -29,6 +30,7 @@ export default function MintPage() {
   const [description, setDescription] = useState();
   const toast = useToast();
   const [status, setStatus] = useState("");
+  const router = useRouter()
 
   useEffect(() => {
     if(nftimage === "") {
@@ -70,7 +72,7 @@ export default function MintPage() {
 
     console.log(ipnft)
     
-    const { status } = await mintNFT("https://api.nft.storage/"+ipnft);
+    const { status } = await mintNFT("https://api.nft.storage/" + ipnft);
     console.log(status);
     toast({
       title: 'NFT minted',
@@ -202,7 +204,7 @@ export default function MintPage() {
                 <Input type="text" value={description} onChange={handleDescChange} />
               </FormControl>
               <Stack spacing={20}>
-                {!currentAccount ?<button
+                {currentAccount ?<button
                   className="border-2 border-solid border-purple px-2 py-1 rounded-md font-bold bg-purple hover:bg-black hover:text-white"
                   onClick={onMintPressed}
                 >

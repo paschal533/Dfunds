@@ -1,8 +1,10 @@
 // Import the NFTStorage class and File constructor from the 'nft.storage' package
+//require('dotenv').config();
+const key = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweGRDN2JEMGMyM2I1MzAwNWU3MDg4QTJEMkYwMTg4NTA1NjU4MUMyQzgiLCJpc3MiOiJuZnQtc3RvcmFnZSIsImlhdCI6MTY1MTYxMjg3OTQyMywibmFtZSI6Im5mdC1taW50ZXIifQ.dPFTApalGOCktryt5lVmWmyuaPU9U9UTZuwfPKQrxV0";
 import { NFTStorage } from 'nft.storage'
 
 // Paste your NFT.Storage API key into the quotes:
-const NFT_STORAGE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweGRDN2JEMGMyM2I1MzAwNWU3MDg4QTJEMkYwMTg4NTA1NjU4MUMyQzgiLCJpc3MiOiJuZnQtc3RvcmFnZSIsImlhdCI6MTY1MTYxMjg3OTQyMywibmFtZSI6Im5mdC1taW50ZXIifQ.dPFTApalGOCktryt5lVmWmyuaPU9U9UTZuwfPKQrxV0'
+const NFT_STORAGE_KEY = key;
 
 /**
   * Reads an image file from `imagePath` and stores an NFT with the given name and description.

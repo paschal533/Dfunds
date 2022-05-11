@@ -44,7 +44,7 @@ export default function Home() {
               <Tab _selected={{ color: "white"}} fontWeight="bold">Balance</Tab>
               <Tab _selected={{ color: "white"}} fontWeight="bold">Transactions</Tab>
               <Tab _selected={{ color: "white"}} fontWeight="bold">NFTs</Tab>
-              <Tab _selected={{ color: "white"}} fontWeight="bold">Send ETH</Tab>
+              <Tab _selected={{ color: "white"}} fontWeight="bold">Send CFX</Tab>
             </TabList>
             <TabPanels>
               <TabPanel>

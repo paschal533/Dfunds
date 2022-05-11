@@ -39,26 +39,42 @@ const NewFundraiser = () => {
       const url = website
       const beneficiary = address
       const cfx = await Conflux.create({ url: "https://test.confluxrpc.com", networkId: 1, logger: console })
-      const me = cfx.wallet.addPrivateKey("0xf507bf529f870fff107fee93220a7f0516d90914c3510d53ac08e8b723c64f0a");
+      const me = cfx.wallet.addPrivateKey("0x9d2c1dc41f209792f8af782f1afcaa2bfc54dd2d67a40722143cd5b36224ffab");
       console.log('starting')
+      console.log(me.address)
+      console.log(me)
+
+      /*let data = {
+        name,
+        url,
+        imageURL,
+        description,
+        beneficiary
+      }
+
+      fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json, text/plain, ',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      }).then((res) => {
+        console.log('Response received')
+        if (res.status === 200) {
+          console.log('Response succeeded!')
+        }
+      })*/
       const transaction = await Contract.createFundraiser(
         name,
         url,
         imageURL,
         description,
         beneficiary
-      ).sendTransaction({from: me.toString() }).executed();
+      ).sendTransaction({from: me.address }).executed();
       console.log(transaction)
       const res = await Contract.fundraisers(10, 0).call();
       console.log(res)
-      /*const transaction = await Contract.methods.createFundraiser(
-        name,
-        url,
-        imageURL,
-        description,
-        beneficiary
-      ).send({ from: currentAccount })
-      console.log(t run ransaction)*/
       handleNewFundraiser();
       setAddress('');
       setFundraiserDescription('');
@@ -68,14 +84,12 @@ const NewFundraiser = () => {
     } catch (error) {
       console.log(error)
       alert(error)
-      /*handleNewFundraiser('');
-      setAddress('');
+      /*setAddress('');
       setFundraiserDescription('');
       setFundraiserWebsite('');
       setFundraiserName('');
-      setImage('');
-    }*/
-   }
+      setImage('');*/
+    }
   }
 
   return (
@@ -139,7 +153,7 @@ const NewFundraiser = () => {
           }}
         />
       <br />
-        {!currentAccount.length > 0 ? <Button
+        {currentAccount ? <Button
           disabled={Validate()}
           id="test-button-primary"
           onClick={handleSubmit}
