@@ -13,7 +13,7 @@ const Receipts = (props) => {
 
     setDonation(donation);
     setDate(formattedDate.toString());
-    setFundName(fund);
+    //setFundName(fund);
   }, []);
 
   return (
