@@ -11,7 +11,7 @@ const Receipts = (props) => {
     
     const formattedDate = new Date(parseInt(date));
 
-    //setDonation(donation);
+    setDonation(donation);
     setDate(formattedDate.toString());
     setFundName(fund);
   }, []);
