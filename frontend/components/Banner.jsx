@@ -1,6 +1,6 @@
 import React from 'react';
 import { IoMdCreate } from "react-icons/io";
-import { Button } from 'web3uikit';
+import { AiOutlinePlus } from "react-icons/ai";
 import Image from "next/image";
 import Bg from '../assets/bg.png';
 import Link from 'next/link';
@@ -30,15 +30,15 @@ const Banner = () => {
             </button>
             </Link>
             <Link href="/new">
-              <Button
-                icon="plus"
-                className="btn-banner"
-                id="test-button-primary-icon"
-                onClick={function noRefCheck(){}}
-                text="New Fundraiser"
-                theme="primary"
+              <button
                 type="button"
-              /> 
+                className="flex flex-row justify-center items-center mr-2 bg-[#21BF96] p-3 rounded-lg cursor-pointer hover:bg-[teal]"
+              >
+                <AiOutlinePlus className="text-white mr-2" />
+                <p className="text-white text-base font-semibold">
+                  New Fundraiser
+                </p>
+              </button>
             </Link>
           </div>
         </div>

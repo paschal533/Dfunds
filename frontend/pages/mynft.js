@@ -2,7 +2,6 @@ import React, { useEffect, useState, useContext } from 'react';
 import { Spinner, Button, useToast } from '@chakra-ui/react';
 import { NFTTile} from '../components';
 import { Context } from '../context/contextProvider';
-import { useWeb3 } from '@3rdweb/hooks';
 //import { useRouter } from 'next/router';
 //import Footer from './Components/Footer';
 import Link from 'next/link';

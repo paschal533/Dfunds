@@ -36,10 +36,7 @@ const Fundraiser = () => {
       }
     }
     init()
-  }, [address])
-  
-  //console.log(address);
-  console.log(fundName)
+  }, [])
    
   return (
     <div className="text-white">
@@ -47,9 +44,7 @@ const Fundraiser = () => {
        <div className="">
           {!modalLoading ? 
           <div className="flex flex-col mt-4 items-center justify-center">
-            <a href={url} target="_blank" >
-              <h1 className="text-2xl font-extrabold">{fundName}</h1>
-            </a>
+            <h1 className="text-2xl font-extrabold">{fundName}</h1>
             <div className="diplayFlex p-4 justify-between">
               <img
                 src={imageURL}
@@ -58,7 +53,10 @@ const Fundraiser = () => {
                 width="100%"
               />
               <div className="ml-4 mt-6 md:mt-2 justify-center items-center flex flex-col">
-                <p className="mt-1">{description}</p>
+                <p className="mt-1">{description}
+                <a href={url} target="_blank" >
+                  <p className=" text-blue-500">Learn More...</p>
+                </a></p>
                 <h2 className="mt-2 font-bold justify-center items-center">Make A Donation</h2>
                 <div className="flex mt-6">
                 $ <input

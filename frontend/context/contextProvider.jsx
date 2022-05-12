@@ -50,7 +50,7 @@ export const ContextProvider = ({ children }) => {
     const init = async () => {
       try{
         const acct = cfx.wallet.addPrivateKey('0x9d2c1dc41f209792f8af782f1afcaa2bfc54dd2d67a40722143cd5b36224ffab')
-        //const contract = cfx.Contract({ abi: FundraiserFactor.abi, bytecode: FundraiserFactor.bytecode })
+        //const contract = cfx.Contract({ abi: FundraiserFactor.abi, bytecode: FundraiserFactor.bytecode }
         //const txReceipt = await contract.constructor().sendTransaction({ from: acct }).executed()
         //console.log(txReceipt);
         const contrac = await cfx.Contract({ abi: FundraiserFactor.abi, address: "cfxtest:aca855fctap4ptfyn0aak58a9t9279pjfeb0ymf6vk" })
@@ -63,7 +63,7 @@ export const ContextProvider = ({ children }) => {
       }
     }
     init();
-  }, [])
+  }, [currentAccount])
 
   const handleNewNotification = () => {
     toast({
@@ -133,6 +133,7 @@ export const ContextProvider = ({ children }) => {
 
   // get a fundraiser details
   const getAfundraiser = async (fund) => {
+    setModalLoading(true)
     try {
       const acct = cfx.wallet.addPrivateKey('0xf507bf529f870fff107fee93220a7f0516d90914c3510d53ac08e8b723c64f0a')
       const instance = await cfx.Contract({ abi: FundraiserContract.abi, address: fund })

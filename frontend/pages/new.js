@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Context } from '../context/contextProvider';
-import { Input, Button } from 'web3uikit';
+import { Input, Button, BeatLoader } from '@chakra-ui/react'
 const { Conflux } = require("js-conflux-sdk");
 
 const NewFundraiser = () => {
@@ -98,77 +98,79 @@ const NewFundraiser = () => {
         <div className="mb-6">
           <h1 className="text-lg font-semibold">New Fundraiser</h1>
         </div>
-        <Input
-          label="Name"
-          name="Fundraiser Name"
-          onChange={(e) => setFundraiserName(e.target.value)}
-          value={name}
-          type="text"
-          validation={{
-            required: true
-          }}
-        />
-        <br />
-        <Input
-          label="Website"
-          name="Fundraiser Website"
-          value={website}
-          onChange={(e) => setFundraiserWebsite(e.target.value)}
-          type="text"
-          validation={{
-            required: true
-          }}
-        />
-        <br />
-        <Input
-          label="Image URL"
-          name="Fundraiser Image"
-          value={image}
-          onChange={(e) => setImage(e.target.value)}
-          type="text"
-          validation={{
-            required: true
-          }}
-        />
-        <br />
-        <Input
-          label="Conflux Address"
-          name="conflux Address"
-          value={address}
-          onChange={(e) => setAddress(e.target.value)}
-          type="text"
-          validation={{
-            required: true
-          }}
-        />
-        <br />
-        <Input
-          label="Description"
-          name="Fundraiser Description"
-          value={description}
-          onChange={(e) => setFundraiserDescription(e.target.value)}
-          type="text"
-          validation={{
-            required: true
-          }}
-        />
-      <br />
-        {currentAccount ? <Button
-          disabled={Validate()}
-          id="test-button-primary"
-          onClick={handleSubmit}
-          text="Submit form"
-          theme="primary"
-          type="button"
-        /> : 
-        <Button
-          disabled={true}
-          id="test-button-primary"
-          onClick={handleSubmit}
-          text="Submit form"
-          theme="primary"
-          type="button"
-        /> }
+        <div className="md:w-[50%] w-[80%] space-y-4"> 
+          <Input
+            placeholder="Fundraiser Name"
+            _placeholder={{ opacity: 1, color: 'gray.500' }}
+            onChange={(e) => setFundraiserName(e.target.value)}
+            value={name}
+            type="text"
+            validation={{
+              required: true
+            }}
+          />
+          <br />
+          <Input
+            placeholder="Fundraiser Website"
+            _placeholder={{ opacity: 1, color: 'gray.500' }}
+            value={website}
+            onChange={(e) => setFundraiserWebsite(e.target.value)}
+            type="text"
+            validation={{
+              required: true
+            }}
+          />
+          <br />
+          <Input
+            placeholder="Fundraiser Image"
+            _placeholder={{ opacity: 1, color: 'gray.500' }}
+            value={image}
+            onChange={(e) => setImage(e.target.value)}
+            type="text"
+            validation={{
+              required: true
+            }}
+          />
+          <br />
+          <Input
+            placeholder="Conflux Address"
+            _placeholder={{ opacity: 1, color: 'gray.500' }}
+            value={address}
+            onChange={(e) => setAddress(e.target.value)}
+            type="text"
+            validation={{
+              required: true
+            }}
+          />
+          <br />
+          <Input
+            placeholder="Description"
+            _placeholder={{ opacity: 1, color: 'gray.500' }}
+            value={description}
+            onChange={(e) => setFundraiserDescription(e.target.value)}
+            type="text"
+            validation={{
+              required: true
+            }}
+          />
+          <br />
+          {currentAccount ? <Button
+            isLoading={Validate()}
+            spinner={"submit"}
+            id="test-button-primary"
+            colorScheme='teal' 
+            size='md'
+            onClick={handleSubmit}
+            >Submit </Button> : 
+          <Button
+            isLoading={true}
+            spinner={"submit"}
+            id="test-button-primary"
+            colorScheme='teal' 
+            size='md'
+            onClick={handleSubmit}
+            >Submit</Button>}
+        </div>
       </div>
     </div>
   )

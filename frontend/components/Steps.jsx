@@ -72,35 +72,35 @@ export default function Steps() {
         w="full"
       >
         <Step
-          title="Create Key"
+          title="Make a Donation"
           step="1"
           description={
             <>
               {" "}
-              Choose your image key for your vault, and save it somewhere safe.
-              We are using HmacSHA256 algorithm to encrypt your key, in which
-              inverse is not possible.
+              Donate to a fundraiser by simply clicking on "view more" button
+              below the fundraiser card. which will take you to the fundraiser page
+              for you to make your donations, and print the receipts.
             </>
           }
         />
         <Step
-          title="Hashing"
+          title="Create and mint NFTs"
           step="2"
           description={
             <>
-              We hash your image key on the blockchain to your address, this
-              step is permanent and cannot be reverted, and the image key cannot
-              be changed afterwards.
+              You can create and mint NFTs by clicking on the "create" button at the navbar.
+              that will take you to the create NFT page where you can create and mint your NFTs
+              on Conflux blockchain.
             </>
           }
         />
         <Step
-          title="Unlock"
+          title="Send CFX"
           step="3"
           description={
             <>
-              Your image key is created, now you can use your image key to
-              access your vault whenever you want.
+              You can send CFX to anyone across the world with our DApp by clicking on the "Dashboard"
+              at the navBar. there, you can send CFX, view your balance and your transaction counts.
             </>
           }
         />

@@ -30,7 +30,7 @@ const Home = () => {
   return (
     <div className="">
       <Head>
-        <title>Create Next App</title>
+        <title>DFunds</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div>
