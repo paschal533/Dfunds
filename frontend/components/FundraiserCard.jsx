@@ -24,7 +24,7 @@ const FundraiserCard = ({ fundraiser }) => {
   const [ totalDonations, setTotalDonations ] = useState(null)
   const [ imageURL, setImageURL ] = useState(null)
   const [ url, setURL ] = useState(null)
-  const [ open, setOpen] = React.useState(false);
+  const [ open, setOpen] = React.useState(f);
   const [ donationAmount, setDonationAmount] = useState(null)
   const [ exchangeRate, setExchangeRate ] = useState(null)
   const [ userDonations, setUserDonations ] = useState(null)
@@ -35,6 +35,7 @@ const FundraiserCard = ({ fundraiser }) => {
     if (fundraiser) {
       setOpen(false)
       getAfund(fundraiser)
+      setOpen(false)
     }
   }, [fundraiser]);
 
