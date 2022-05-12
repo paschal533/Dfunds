@@ -29,7 +29,7 @@ const FundraiserCard = ({ fundraiser }) => {
   const [ exchangeRate, setExchangeRate ] = useState(null)
   const [ userDonations, setUserDonations ] = useState(null)
   const [ isOwner, setIsOwner ] = useState(false)
-  const [ beneficiary, setNewBeneficiary ] = useState('');
+  //const [ beneficiary, setNewBeneficiary ] = useState('');
 
   useEffect(() => {
     if (fundraiser) {
