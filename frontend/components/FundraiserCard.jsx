@@ -32,7 +32,6 @@ const FundraiserCard = ({ fundraiser }) => {
   const [ beneficiary, setNewBeneficiary ] = useState('');
 
   useEffect(() => {
-    const
     if (fundraiser) {
       getAfund(fundraiser)
       setOpen(false)
