@@ -34,7 +34,7 @@ const FundraiserCard = ({ fundraiser }) => {
   useEffect(() => {
     if (fundraiser) {
       getAfund(fundraiser)
-      //setOpen(false)
+      setOpen(false)
     }
   }, [fundraiser]);
 
