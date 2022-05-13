@@ -28,7 +28,7 @@ export default function Editor() {
   const [background, setBackground] = useState('#fff');
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  const { walletaddress, handleImage } = useContext(Context);
+  const { handleImage } = useContext(Context);
   useEffect(() => {
     initializeGrid();
   }, []);
@@ -166,8 +166,8 @@ export default function Editor() {
               size="lg"
               cursor="pointer"
               onClick={() => {
-                setloading(true);
                 onOpen();
+                setloading(true);
                 previewNFT();
               }}
             >

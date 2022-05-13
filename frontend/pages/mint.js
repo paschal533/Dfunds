@@ -69,11 +69,8 @@ export default function MintPage() {
     }
 
     const { ipnft } = nftStorageResponse;
-
-    console.log(ipnft)
     
     const { status } = await mintNFT("https://api.nft.storage/" + ipnft);
-    console.log(status);
     toast({
       title: 'NFT minted',
       description: 'Your NFT has been minted successfully',
@@ -146,7 +143,7 @@ export default function MintPage() {
           ))}
         </div>*/}
         <div className=" gap-3 pt-5">
-          <a href={status.slice(45)} target="_blank">
+          <Link href="/draw" >
             <Button
               as="a"
               backgroundColor="#915bff"
@@ -164,9 +161,9 @@ export default function MintPage() {
               size="lg"
               cursor="pointer"
             >
-              View Transaction
+              Go Back to draw
             </Button>
-          </a>
+          </Link>
         </div>
       </div>
     </div>

@@ -18,7 +18,7 @@ const Banner = () => {
           </p>
           <br />
           <div className="flex">
-          <Link href="/create">
+          <Link href="/draw">
             <button
               type="button"
               className="flex flex-row justify-center items-center mr-2 bg-[#3198FE] p-3 rounded-lg cursor-pointer hover:bg-[#2546bd]"

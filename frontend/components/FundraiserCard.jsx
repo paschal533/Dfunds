@@ -126,3 +126,12 @@ const FundraiserCard = ({ fundraiser }) => {
 }
 
 export default FundraiserCard;
+
+export async function getStaticProps(){
+  
+  return {
+    props: {
+      todos,
+    },
+  };
+}

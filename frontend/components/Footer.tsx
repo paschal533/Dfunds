@@ -74,10 +74,10 @@ export default function Footer() {
           <Grid templateColumns="repeat(1,1fr)" gap="4">
             <TextLink
               text="Contract"
-              href={`https://mumbai.polygonscan.com/address/`}
+              href="/"
             />
             <TwitterShareButton
-              url={"http://localhost300"}
+              url={"https://dfund.netlify.app/"}
               options={{
                 text: "DFunds | A Decenterized fund raiser app",
               }}

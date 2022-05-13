@@ -20,6 +20,7 @@ export const mintNFT = async (url) => {
 
     const contract = cfx.Contract({ address: "cfxtest:acaj40uw90hk63ty08ptdz3ragb1bgbwgjwdj4hpry", abi })
     let supply = await contract.totalSupply();
+    //console.log(contract)
 
     try {
         const receipt = await contract.mint(me.address, supply + 1, tokenURI).sendTransaction({ from: me.address, "gasPrice": 1000 }).executed();

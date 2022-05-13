@@ -1,10 +1,10 @@
 import React, { useContext, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { Navbar, Loader } from '../../components';
+import { ConnectWallet, Loader } from '../../components';
 import { Context } from '../../context/contextProvider';
 import { Button } from 'web3uikit';
 
-const Fundraiser = () => {
+const Fundraiser = ({ address }) => {
   const { 
     description, 
     fundName, 
@@ -24,8 +24,8 @@ const Fundraiser = () => {
     beneficiary,
     currentAccount
    } = useContext(Context);
-   const router = useRouter();
-   const { address } = router.query;
+
+   //console.log(address)
 
   useEffect(() => {
     const init = () => {
@@ -66,14 +66,21 @@ const Fundraiser = () => {
                   <p>CFX Amount: {ethAmount}</p>
                 </div>
                 <div className="md:mt-4 mt-0"/>
-                <Button
+                {currentAccount ? <Button
                   id="test-button-primary"
                   onClick={() => submitFunds()}
-                  disabled={!donationAmount && currentAccount ? true : false}
+                  disabled={!donationAmount ? true : false}
                   text="Donate"
                   theme="primary"
                   type="button"
-                />
+                /> : <Button
+                id="test-button-primary"
+                onClick={() => submitFunds()}
+                disabled={true}
+                text="Donate"
+                theme="primary"
+                type="button"
+              /> }
                 <div className="flex flex-col justify-center items-center">
                   <h1 className="mt-4 font-bold text-xl">My donations</h1>
                     {renderDonationsList() ? renderDonationsList() : <p>You have not made donations yet</p>}
@@ -122,3 +129,22 @@ const Fundraiser = () => {
 }
 
 export default Fundraiser;
+// Fetch data at build time
+export async function getStaticProps({ params }) {
+  return {
+    props: {
+      address: params.address,
+    },
+  };
+}
+
+export async function getStaticPaths({ params }) {
+  //const posts = await getFundraiserDetails(address);
+  return {
+    paths: [
+      {  params: { address: "0x86af22b34984dccac7fc4e7640d8bd935721db2a" } },
+      {  params: { address: "0x8362847cd84bc6981085de8fe1c6016ae8c552a2" } },
+    ],
+    fallback: false //'blocking',
+  };
+}

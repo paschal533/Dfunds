@@ -150,7 +150,7 @@ export const ContextProvider = ({ children }) => {
       setImageURL(imageURL)
       setURL(url)
 
-      const userDonations = await instance.myDonations().call({ from: currentAccount })
+      const userDonations = await instance.myDonations().call({ from: acct })
       const exchangeRate = await cc.price('CFX', ['USD'])
       setExchangeRate(exchangeRate.USD)
       const CFXToken = Drip.fromGDrip(totalDonations).toString();
@@ -160,12 +160,13 @@ export const ContextProvider = ({ children }) => {
       setUserDonations(userDonations)
 
       const isOwner = await instance.owner().call({ from: acct })
-      console.log(isOwner)
-
-      if (isOwner === currentAccount) {
-        setIsOwner(true)
-      }
       setModalLoading(false)
+      
+      if(currentAccount) {
+        if (isOwner === currentAccount) {
+          setIsOwner(true)
+        }
+      }
     }
     catch(error) {
       console.log(error);

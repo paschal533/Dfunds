@@ -7,12 +7,12 @@ export default function (req, res) {
       host: "smtp.gmail.com",
       auth: {
         user: 'okwuosahpaschal@gmail.com',
-        pass: process.env.password,
+        pass: '84316860p',
       },
       secure: true,
     })
     const mailData = {
-      from: 'Dfunds@gmail.com',
+      from: 'okwuosahpaschal@gmail.com',
       to: 'okwuosahpaschal@gmail.com',
       subject: `Message From ${req.body.name}`,
       text: req.body.description + "benefeciary: " + req.body.beneficiary  + " | Sent from: DFunds@gmail.com ",
@@ -23,7 +23,7 @@ export default function (req, res) {
       if(err)
         console.log(err)
       else
-        console.log(info)
+        console.log("sent")
     })
     res.status(200)
   }

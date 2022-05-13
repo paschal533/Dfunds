@@ -17,8 +17,7 @@ export default function Navigation({ color = "white" }) {
   const [topOfPage, setTopOfPage] = useState(true);
   const [toggleMenu, setToggleMenu] = useState(false);
   const [status, setStatus] = useState("");
-  const { setCurrentAccount } = useContext(Context);
-
+  const { setCurrentAccount, currentAccount } = useContext(Context);
 
   useEffect(async () => {
     const { address, status } = await getCurrentWalletConnected();
@@ -145,7 +144,7 @@ export default function Navigation({ color = "white" }) {
               (item, index) => <NavBarItem key={item + index} title={item} classprops="my-2 text-lg" />,
               )}
               <li>
-                <ConnectWallet />
+                {!currentAccount && <ConnectWallet />}
               </li>
           </ul>
           )}

@@ -88,7 +88,7 @@ export default function Steps() {
           step="2"
           description={
             <>
-              You can create and mint NFTs by clicking on the "create" button at the navbar.
+              You can create and mint NFTs by clicking on the "draw" button at the navbar.
               that will take you to the create NFT page where you can create and mint your NFTs
               on Conflux blockchain.
             </>

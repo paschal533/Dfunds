@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Context } from '../context/contextProvider';
-import { Input, Button, BeatLoader } from '@chakra-ui/react'
+import { Input, Button, BeatLoader } from '@chakra-ui/react';
 const { Conflux } = require("js-conflux-sdk");
 
 const NewFundraiser = () => {
@@ -10,9 +10,6 @@ const NewFundraiser = () => {
   const [ description, setFundraiserDescription ] = useState(null);
   const [ image, setImage ] = useState(null);
   const [ address, setAddress ] = useState(null);
-
-  console.log(Contract);
-  console.log(currentAccount)
    
   const Validate = () => {
     if(name != null && website != null && description != null && image != null && address != null) {
@@ -41,17 +38,15 @@ const NewFundraiser = () => {
       const cfx = await Conflux.create({ url: "https://test.confluxrpc.com", networkId: 1, logger: console })
       const me = cfx.wallet.addPrivateKey("0x9d2c1dc41f209792f8af782f1afcaa2bfc54dd2d67a40722143cd5b36224ffab");
       console.log('starting')
-      console.log(me.address)
-      console.log(me)
 
-      /*let data = {
+      let data = {
         name,
         url,
         imageURL,
         description,
         beneficiary
       }
-
+ 
       fetch('/api/contact', {
         method: 'POST',
         headers: {
@@ -64,8 +59,9 @@ const NewFundraiser = () => {
         if (res.status === 200) {
           console.log('Response succeeded!')
         }
-      })*/
-      const transaction = await Contract.createFundraiser(
+      })
+
+      /*const transaction = await Contract.createFundraiser(
         name,
         url,
         imageURL,
@@ -74,7 +70,7 @@ const NewFundraiser = () => {
       ).sendTransaction({from: me.address }).executed();
       console.log(transaction)
       const res = await Contract.fundraisers(10, 0).call();
-      console.log(res)
+      console.log(res)*/
       handleNewFundraiser();
       setAddress('');
       setFundraiserDescription('');
