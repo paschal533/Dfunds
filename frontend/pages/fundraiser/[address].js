@@ -40,7 +40,6 @@ const Fundraiser = () => {
    
   return (
     <div className="text-white">
-      <Navbar />
        <div className="">
           {!modalLoading ? 
           <div className="flex flex-col mt-4 items-center justify-center">

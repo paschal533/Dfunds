@@ -2,6 +2,7 @@ import React, {useEffect, useContext, useState} from 'react';
 import Link from 'next/link';
 import { Context } from '../context/contextProvider';
 import FundraiserContract from '../contracts/Fundraiser.json';
+import Loader from "./Loader";
 import { Card, Button } from 'web3uikit';
 import { Conflux, Drip } from 'js-conflux-sdk';
 
@@ -32,10 +33,13 @@ const FundraiserCard = ({ fundraiser }) => {
   const [ beneficiary, setNewBeneficiary ] = useState('');
 
   useEffect(() => {
-    if (fundraiser) {
-      getAfund(fundraiser)
-      setOpen(false)
+    const init = async () => {
+      if (fundraiser) {
+        await getAfund(fundraiser)
+        setOpen(false)
+      }
     }
+    init()
   }, [fundraiser]);
 
    // get a fundraiser details
@@ -79,7 +83,9 @@ const FundraiserCard = ({ fundraiser }) => {
 
   const cardDetails = () => {
     return (
-      <div>
+      <>
+      {!open ? 
+        <div>
         <div className="text-[#030A1C] text-sm">{`${description?.slice(0, 150)}...`}</div>
         <div className="font-bold mb-2">Total Donations: ${totalDonations}</div>
         <Link className="donation-receipt-link" href={`/fundraiser/${fundraiser}`}>
@@ -91,7 +97,8 @@ const FundraiserCard = ({ fundraiser }) => {
             className="p-4"
           />
         </Link>
-      </div>
+      </div> : <Loader /> }
+      </>
     )
   }
 
@@ -104,7 +111,7 @@ const FundraiserCard = ({ fundraiser }) => {
           title={fundName}
           tooltipText={<span style={{width: 200}}>{description}</span>}
          >
-          <div>
+         <div>
             <img
               src={imageURL}
               height="180px"

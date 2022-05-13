@@ -5,7 +5,7 @@ import Image from "next/image";
 //import config from "../../utils/helpers/config";
 import NextLink from "next/link";
 import { TwitterShareButton } from "react-twitter-embed";
-import Logo from '../assets/vault3_logo.svg';
+import Logo from '../assets/logo.png';
 
 import type { TextLinkProps } from "../types/props";
 

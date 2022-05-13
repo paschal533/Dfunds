@@ -6,7 +6,7 @@ import {
 import Image from "next/image";
 import { useState, useEffect, useContext } from "react";
 import { Context } from '../context/contextProvider';
-import Logo from '../assets/vault3_logo.svg';
+import Logo from '../assets/logo.png';
 import { FiMenu } from "react-icons/fi";
 import { AiOutlineClose } from "react-icons/ai";
 import { getCurrentWalletConnected } from "./interact";
@@ -121,7 +121,7 @@ export default function Navigation({ color = "white" }) {
           </Flex>
         </Link>
           <ul className="text-white md:flex hidden list-none flex-row justify-between items-center flex-initial">
-          {["New", "Create", "Games", "Dashboard"].map((item, index) => (
+          {["New", "Draw", "Games", "Dashboard"].map((item, index) => (
               <NavBarItem key={item + index} title={item} />
           ))}
           <li>
@@ -141,7 +141,7 @@ export default function Navigation({ color = "white" }) {
             flex flex-col justify-start items-end rounded-md blue-glassmorphism text-white animate-slide-in"
           >
             <li className="text-xl w-full my-2"><AiOutlineClose onClick={() => setToggleMenu(false)} /></li>
-              {["New", "Create", "Games", "Dashboard"].map(
+              {["New", "Draw", "Games", "Dashboard"].map(
               (item, index) => <NavBarItem key={item + index} title={item} classprops="my-2 text-lg" />,
               )}
               <li>
