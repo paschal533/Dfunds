@@ -18,7 +18,7 @@ export default function Balance({ user }) {
       const address = user;
       const balance = await conflux.cfx.getBalance(address);
       const balanceDrip = Drip(balance)
-      setBalance(balanceDrip.toCFX());
+      //setBalance(balanceDrip.toCFX());
     }
      getAddressBalance();
   })
