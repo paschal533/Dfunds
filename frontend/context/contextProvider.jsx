@@ -150,7 +150,7 @@ export const ContextProvider = ({ children }) => {
       setImageURL(imageURL)
       setURL(url)
 
-      const userDonations = await instance.myDonations().call({ from: acct })
+      const userDonations = await instance.myDonations().call({ from: currentAccount ? currentAccount : acct })
       const exchangeRate = await cc.price('CFX', ['USD'])
       setExchangeRate(exchangeRate.USD)
       const CFXToken = Drip.fromGDrip(totalDonations).toString();
