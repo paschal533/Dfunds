@@ -1,6 +1,6 @@
 // Import the NFTStorage class and File constructor from the 'nft.storage' package
 //require('dotenv').config();
-const key = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweGRDN2JEMGMyM2I1MzAwNWU3MDg4QTJEMkYwMTg4NTA1NjU4MUMyQzgiLCJpc3MiOiJuZnQtc3RvcmFnZSIsImlhdCI6MTY1MTYxMjg3OTQyMywibmFtZSI6Im5mdC1taW50ZXIifQ.dPFTApalGOCktryt5lVmWmyuaPU9U9UTZuwfPKQrxV0";
+const key =  process.env.NEXT_APP_NFTSTORAGE_KEY
 import { NFTStorage } from 'nft.storage'
 
 // Paste your NFT.Storage API key into the quotes:

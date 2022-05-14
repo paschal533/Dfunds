@@ -15,8 +15,7 @@ export const mintNFT = async (url) => {
     const tokenURI = url;
 
     const cfx = await Conflux.create({ url: "https://test.confluxrpc.com", logger: console })
-    const me = cfx.wallet.addPrivateKey("0xf507bf529f870fff107fee93220a7f0516d90914c3510d53ac08e8b723c64f0a");
-    //const me = cfx.wallet.addPrivateKey('0x9d2c1dc41f209792f8af782f1afcaa2bfc54dd2d67a40722143cd5b36224ffab')
+    const me = cfx.wallet.addPrivateKey(process.env.PrivateKey);
 
     const contract = cfx.Contract({ address: "cfxtest:acaj40uw90hk63ty08ptdz3ragb1bgbwgjwdj4hpry", abi })
     let supply = await contract.totalSupply();
