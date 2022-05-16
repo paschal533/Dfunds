@@ -19,7 +19,7 @@ module.exports = {
       host: "test.confluxrpc.com",     // Conflux provides public RPC services for testnet
       port: 80,
       network_id: 1,       // Conflux testnet networkId is 1
-      privateKeys: [privateKey]  //  Adding the account private key used for sending transactions
+      privateKeys: [privateKey]  // Adding the account private key used for sending transactions
     },
   }
 };
