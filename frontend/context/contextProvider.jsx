@@ -50,7 +50,7 @@ export const ContextProvider = ({ children }) => {
     const init = async () => {
       try{
         const acct = cfx.wallet.addPrivateKey('0xf507bf529f870fff107fee93220a7f0516d90914c3510d53ac08e8b723c64f0a')
-        const contract = cfx.Contract({ abi: FundraiserFactor.abi, bytecode: FundraiserFactor.bytecode }
+        //const contract = cfx.Contract({ abi: FundraiserFactor.abi, bytecode: FundraiserFactor.bytecode }
         //const txReceipt = await contract.constructor().sendTransaction({ from: acct }).executed()
         //console.log(txReceipt);
         const contrac = await cfx.Contract({ abi: FundraiserFactor.abi, address: "cfxtest:aca855fctap4ptfyn0aak58a9t9279pjfeb0ymf6vk" })
