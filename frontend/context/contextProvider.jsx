@@ -135,7 +135,7 @@ export const ContextProvider = ({ children }) => {
   const getAfundraiser = async (fund) => {
     setModalLoading(true)
     try {
-      const acct = cfx.wallet.addPrivateKey('0xf507bf529f870fff107fee93220a7f0516d90914c3510d53ac08e8b723c64f0a')
+      const acct = cfx.wallet.addPrivateKey(process.env.Privatekey)
       const instance = await cfx.Contract({ abi: FundraiserContract.abi, address: fund })
       setFactoryContract(instance)
 
