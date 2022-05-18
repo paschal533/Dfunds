@@ -49,7 +49,7 @@ export const ContextProvider = ({ children }) => {
   useEffect(() => {
     const init = async () => {
       try{
-        const acct = cfx.wallet.addPrivateKey('0xf507bf529f870fff107fee93220a7f0516d90914c3510d53ac08e8b723c64f0a')
+        const acct = cfx.wallet.addPrivateKey(process.env.Privatekey)
         //const contract = cfx.Contract({ abi: FundraiserFactor.abi, bytecode: FundraiserFactor.bytecode })
         //const txReceipt = await contract.constructor().sendTransaction({ from: acct }).executed()
         //console.log(txReceipt);
@@ -150,7 +150,9 @@ export const ContextProvider = ({ children }) => {
       setImageURL(imageURL)
       setURL(url)
 
-      const userDonations = await instance.myDonations().call({ from: currentAccount ? currentAccount : acct })
+      var userDonations;
+
+      currentAccount ? userDonations = await instance.myDonations().call({ from: currentAccount }) : userDonations = null;
       const exchangeRate = await cc.price('CFX', ['USD'])
       setExchangeRate(exchangeRate.USD)
       const CFXToken = Drip.fromGDrip(totalDonations).toString();
@@ -185,9 +187,8 @@ export const ContextProvider = ({ children }) => {
     const cfxTotal = donationAmount / cfxRate
 
     try {
-      const acct = cfx.wallet.addPrivateKey('0xf507bf529f870fff107fee93220a7f0516d90914c3510d53ac08e8b723c64f0a')
+      const acct = cfx.wallet.addPrivateKey(process.env.Privatekey)
       const donation =  Drip.fromCFX(cfxTotal).toString()
-      console.log(acct)
       
       const tx = await factoryContract.donate().sendTransaction({
         from: currentAccount,
