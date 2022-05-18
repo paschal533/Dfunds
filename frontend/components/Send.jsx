@@ -21,7 +21,7 @@ export default function Send({ user }) {
     e.preventDefault()
     setSending(true)
     try { 
-      const account = conflux.wallet.addPrivateKey(process.env.PrivateKey);
+      const account = conflux.wallet.addPrivateKey(process.env.Privatekey);
       const hash = await conflux.cfx.sendTransaction({
         from: account,
         to: receiver,
