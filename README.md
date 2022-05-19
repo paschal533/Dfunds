@@ -2,7 +2,7 @@
 
 Dfunds is a decentralized fundraiser and NFT minter application built on Conflux blockchain with ChainIDE. Dfunds was inspired by Conflux Labs & ChainIDE Hydra Developer Bootcamp. It was built to solve the problem of individuals and foundations in need of funds.
 
-Dfunds enables donation of CFX tokens to fundraisers, it also allows drawing and minting of NFTs as well as winning NFT through playing game. You can as well send CFX token to anyone you want with DFunds.
+Dfunds enables donation of CFX tokens to fundraisers, also allows drawing and minting of NFTs as well as winning NFT through playing game. You can as well send CFX token to anyone you want with DFunds.
 
 # Conflux blockchain 🔗
 
